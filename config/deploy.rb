@@ -9,8 +9,9 @@ require 'eycap/recipes'
 
 # Once you have the IP of your Express image, put it in here
 set :express_ip, "172.16.91.130"
+set :user, "express"
 # If you don't have ssh keys set up, then put your express user's password here
-set :password, "2hIlUGNub"
+#set :password, "2hIlUGNub"
 
 #
 # Make your choice of source code management here, dependent on which your 
@@ -40,28 +41,29 @@ set :password, "2hIlUGNub"
 
 # comment out if it gives you trouble. newest net/ssh needs this set.
 ssh_options[:paranoid] = false
+#ssh_options[:keys] = %w(/home/peterwhitfield/.ssh/id_rsa)
 
 # ==============================================================================
 # DEPLOYING USING GITHUB
 # ==============================================================================
-# set :github_user, "YOUR_GITHUB_USER"
-# set :github_app, "YOUR_GITHUB_APP"
-# set :scm, :git
+ set :github_user, "viz"
+ set :github_app, "test_setup"
+ set :scm, :git
 # # Replace this with your git repository name
-# set :repository,  "git@github.com:#{github_user}/#{github_app}.git"
+ set :repository,  "git@github.com:viz/test_setup.git"
 # # Replace this with your git username
-# set :scm_user,    github_user
+  set :scm_user,    "viz"
 # # Leave this, as we deploy and run the applications on the VM image as 'express'
-# set :user,        'express'
+ set :user,        "express"
 # 
 # # This is the branch you wish to deploy, by default we've set it to master,
 # # however you might want to set it to 'stable' or some other branch you're using
-# set :branch,      "master"
+ set :branch,      "master"
 # # Deploy using an ssh agent.  On Mac OS X you may need to run:
 # # or something similar, to add your key to the agent and run it
 # #  ssh-agent; ssh-add ~/.ssh/id_dsa
 #
-# set :ssh_options, { :forward_agent => true }
+set :ssh_options, { :forward_agent => true }
 
 set :sql_pass,         '77zxcvb77'
 set :application,      'rails'
@@ -165,3 +167,7 @@ after "deploy:migrations", "deploy:cleanup"
 after "deploy:update_code","deploy:symlink_configs"
 # uncomment the following to have a database backup done before every migration
 # before "deploy:migrate", "db:dump"
+
+task :search_libs, :hosts => "#{express_ip}" do
+  run "ls -x1 /usr/lib | grep -i xml"
+end
