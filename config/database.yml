@@ -20,10 +20,3 @@ test:
 production:
       host: localhost
       adapter: mysql
-
-express:
-      host: localhost
-      adapter: mysql
-      database: setup_prod
-      username: rails_prod
-      password: 77zxcvb77
