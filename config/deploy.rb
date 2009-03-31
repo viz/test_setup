@@ -168,6 +168,4 @@ after "deploy:update_code","deploy:symlink_configs"
 # uncomment the following to have a database backup done before every migration
 # before "deploy:migrate", "db:dump"
 
-task :search_libs, :hosts => "#{express_ip}" do
-  run "ls -x1 /usr/lib | grep -i xml"
-end
+
